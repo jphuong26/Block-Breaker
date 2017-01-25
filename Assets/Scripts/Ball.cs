@@ -6,7 +6,6 @@ public class Ball : MonoBehaviour {
 	private Paddle paddle;
 	private Vector3 paddleToBallVector;
 	private Rigidbody2D myRigidBody;
-
 	private bool hasStarted = false;
 
 	// Use this for initialization
@@ -19,6 +18,7 @@ public class Ball : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (!hasStarted) {
+
 			// Lock ball relative to the paddle
 			this.transform.position = paddle.transform.position + paddleToBallVector;
 
@@ -28,6 +28,13 @@ public class Ball : MonoBehaviour {
 				hasStarted = true;
 				this.myRigidBody.velocity = new Vector2 (2f, 10f);
 			}
+		}
+	}
+
+	void OnCollisionEnter2D (Collision2D collision) {
+		Vector2 tweak = new Vector2 (Random.Range(0f, 0.2f), Random.Range(0f, 0.2f));
+		if (hasStarted) {
+			myRigidBody.velocity += tweak;
 		}
 	}
 }
